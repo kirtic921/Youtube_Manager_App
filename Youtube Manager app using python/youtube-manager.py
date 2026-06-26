@@ -39,6 +39,7 @@ def main():
         print("4. Delete a youtube video ")
         print("5. Exit the app")
         choice = input("Enter your choice:")
+        print(videos)
 
         match choice:
             case '1':
