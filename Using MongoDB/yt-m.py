@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from bson import ObjectId
 
 client = MongoClient("mongodb+srv://12_3:12_3@cluster0.solb9us.mongodb.net/")
 
@@ -8,16 +9,20 @@ video_collection = db["videos"]
 print(video_collection)
 
 def list_all_video():
-    pass
+    for video in video_collection.find():
+        print(f"ID: {video['_id']}, Name: {video['name']}, Time: {video['time']}")
 
 def add_video(name, time):
-    pass
+    video_collection.insert_one({"name" : name, "time" : time})
 
 def update_video(video_id, new_name, new_time):
-    pass 
+    video_collection.update_one(
+        {'_id': ObjectId(video_id)},
+        {"$set": {"name": new_name, "time": new_time}}
+    )
 
 def delete_video(video_id):
-    pass 
+    video_collection.delete_one({'_id': ObjectId(video_id)})
 
 def main():
     while True:
@@ -36,13 +41,13 @@ def main():
             time = input("Enter the video duration: ")
             add_video(name, time)
         elif choice == '3':
-            video_id = input("Enter the number of video to update: ")
+            video_id = input("Enter the ID of video to update: ")
             new_name = input("Enter the title of the new video: ")
             new_time = input("Enter the time of the new video: ")
             update_video(video_id, new_name, new_time)
         elif choice == '4':
-            video_id = input("Enter the number of video to delete: ")
-            delete(video_id)
+            video_id = input("Enter the ID  of video to delete: ")
+            delete_video(video_id)
         elif choice == '5':
             break
         else:
