@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from bson import ObjectId
 
-client = MongoClient("mongodb+srv://12_3:<password>@cluster0.solb9us.mongodb.net/")
+client = MongoClient("paste connection url")
 
 db = client["ytmanager"]
 video_collection = db["videos"]
